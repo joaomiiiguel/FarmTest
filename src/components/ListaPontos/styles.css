@@ -1,0 +1,27 @@
+.ModalListaPontos {
+  position: absolute;
+  width: 30%;
+  max-width: 340px;
+  top: 5%;
+  left: 2%;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  -webkit-box-shadow: 8px 8px 10px -3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 8px 8px 10px -3px rgba(0, 0, 0, 0.3);
+  box-shadow: 8px 8px 10px -3px rgba(0, 0, 0, 0.3);
+}
+
+.titleList {
+  background-color: #20252b;
+  color: white;
+  margin-top: 0;
+  padding: 10px 0px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.MsgListEmpity {
+  font-size: 12px;
+  width: 60%;
+  margin: 15px auto;
+}
