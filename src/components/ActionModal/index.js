@@ -1,12 +1,13 @@
 import ButtonComp from '../Button'
 import './styles.css'
 
-export default function ActionModal() {
+export default function ActionModal({ listMarkers, markerSelected, deleteFunction, addMarkerFunction, deleteAllFunction}) {
+
   return (
     <div className='containerActionModal'>
-        <ButtonComp nameButton='deletar pin' deleteButton onClickButton={() => alert('Deletar')}/>
-        <ButtonComp nameButton='Adicionar Novo' onClickButton={() => alert('Adicionar')}/>
-        <ButtonComp nameButton='deletar todos' deleteButton onClickButton={() => alert('Deletar Todos')}/>
+        {markerSelected && <ButtonComp nameButton='deletar pin' deleteButton onClickButton={deleteFunction}/>}
+        <ButtonComp nameButton='Adicionar Novo' onClickButton={addMarkerFunction}/>
+        {listMarkers.length > 1 && <ButtonComp nameButton='deletar todos' deleteButton onClickButton={deleteAllFunction}/>}
     </div>
   )
 }

@@ -3,7 +3,7 @@
     width: 100%;
     padding: 8px 20px;
     border-radius: 4px;
-    border: 1px solid #C8CED8;
+    border: none;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
