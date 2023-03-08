@@ -1,27 +1,35 @@
-.Button{
-    background-color: white;
-    width: 100%;
-    padding: 8px 20px;
-    border-radius: 4px;
-    border: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    cursor: pointer;
-    margin-top: 5px;
+.Button {
+  background-color: white;
+  width: 100%;
+  padding: 8px 20px;
+  border-radius: 4px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 5px;
 }
-.textButton{
-    font-size: 12px;
-    margin: 0;
-    font-weight: 700;
-    color: #556476;
-    margin-right: 7px;
+.Button:hover {
+  background-color: rgba(202, 202, 202);
+  transition: 0.5s;
+}
+.textButton {
+  font-size: 12px;
+  margin: 0;
+  font-weight: 700;
+  color: #556476;
+  margin-right: 7px;
 }
 
-.ButtonDelete{
-    background-color: #D20200;
+.ButtonDelete {
+  background-color: #d20200;
 }
-.textDelete{
-    color: #fff;
+.ButtonDelete:hover {
+  background-color: #a20502;
+  transition: 0.5s;
+}
+.textDelete {
+  color: #fff;
 }
