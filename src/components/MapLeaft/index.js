@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { GeoJSON, ZoomControl, Marker } from 'react-leaflet';
 import L from 'leaflet'
 
@@ -9,68 +9,83 @@ import MarkerIcon from '../../assets/Mark.svg'
 import MarkerMoveIcon from '../../assets/MarkMove.svg'
 
 
+const MarkFarmIcon = new L.Icon({
+    iconUrl: MarkerIcon
+})
+const MarkMoveFarmIcon = new L.Icon({
+    iconUrl: MarkerMoveIcon
+})
+
 export default function MapLeaflet({ mapData, position }) {
-    const [markerSeleted, setMarkerSelected] = useState(false)
     const [listMarkers, setListMarkers] = useState([])
+    const [markerSeleted, setMarkerSelected] = useState(null);
 
 
-    const MarkFarmIcon = new L.Icon({
-        iconUrl: MarkerIcon
-    })
-    const MarkMoveFarmIcon = new L.Icon({
-        iconUrl: MarkerMoveIcon
-    })
-
-    const addMarker = useCallback((listMarkers) => {
+    function handleAddMarker() {
+        setMarkerSelected(null)
         setListMarkers(listMarkers => [...listMarkers, {
-            idMarker: listMarkers.length + 1,
+            idMarker: listMarkers.length > 0 ? listMarkers[listMarkers.length - 1].idMarker + 1 : 1,
             createdAt: new Date(),
-            lat: -53.584374,
-            lng: -15.179319
+            position: [-15.179319, -53.584374],
         }])
-        console.log('new');
-    }, [],)
-
-    function deleteMarker() {
-        setMarkerSelected(!markerSeleted)
-        console.log(listMarkers);
     }
+
+    function handlerSelectMarker(id) {
+        setMarkerSelected(id)
+    }
+
+    function handleDeleteMarker(id) {
+        setListMarkers((listMarkers) => listMarkers.filter(obj => obj.idMarker !== id));
+        setMarkerSelected(null);
+    }
+
     function deleteAllMarkers() {
+        setMarkerSelected(null);
         setListMarkers([])
     }
 
-    function clickMarker() {
-        setMarkerSelected(!markerSeleted)
-        console.log(listMarkers, setListMarkers);
-        console.log('se');
+
+    function updateMarkerPosition(index, newPosition) {
+        setListMarkers((prevMarkers) =>
+            prevMarkers.map((marker, idx) => {
+                if (idx === index) {
+                    return { ...marker, position: newPosition };
+                }
+                return marker;
+            })
+        );
     }
 
     useEffect(() => {
-        console.log(listMarkers);
     }, [listMarkers])
 
     return (
         <div>
             <ZoomControl position='topright' />
-            <ListMarker dataList={listMarkers} />
+            <ListMarker dataList={listMarkers} markerSelected={markerSeleted} setMarkerSelected={setMarkerSelected} />
             <ActionModal
                 listMarkers={listMarkers}
                 markerSelected={markerSeleted}
                 deleteAllFunction={() => deleteAllMarkers()}
-                deleteFunction={() => deleteMarker()}
-                addMarkerFunction={() => addMarker()}
+                deleteFunction={() => handleDeleteMarker(markerSeleted)}
+                addMarkerFunction={() => handleAddMarker()}
             />
-            <Marker draggable editable
-                position={position}
-                icon={!markerSeleted ? MarkFarmIcon : MarkMoveFarmIcon}
-            />
-            {listMarkers.map(marker => (
-                <Marker key={marker.idMarker} draggable editable
-                    position={[marker.lat, marker.lng]}
-                    icon={!markerSeleted ? MarkFarmIcon : MarkMoveFarmIcon}
+
+            {listMarkers.map((marker, index) => (
+                <Marker key={index} draggable editable
+                    position={marker.position}
+                    icon={markerSeleted === marker.idMarker ? MarkMoveFarmIcon : MarkFarmIcon}
+                    eventHandlers={{
+                        dragend: (e) => {
+                            updateMarkerPosition(index, e.target.getLatLng());
+                        },
+                        click: () => {
+                            handlerSelectMarker(marker.idMarker);
+                        }
+                    }}
                 />
-            )
-            )}
+            ))}
+
             <GeoJSON data={mapData} />
         </div>
     );

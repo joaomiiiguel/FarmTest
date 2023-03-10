@@ -42,6 +42,10 @@
 .cardMark:last-child{
   padding-bottom: 10px;
 }
+
+.active{
+  background-color: rgb(183, 211, 179);
+}
 .HeaderCard{
   display: flex;
   align-items: center;

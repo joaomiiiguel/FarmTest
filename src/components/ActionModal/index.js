@@ -5,9 +5,9 @@ export default function ActionModal({ listMarkers, markerSelected, deleteFunctio
 
   return (
     <div className='containerActionModal'>
-        {markerSelected && <ButtonComp nameButton='deletar pin' deleteButton onClickButton={deleteFunction}/>}
-        <ButtonComp nameButton='Adicionar Novo' onClickButton={addMarkerFunction}/>
+        {markerSelected !== null && <ButtonComp nameButton='deletar pin' deleteButton onClickButton={deleteFunction}/>}
         {listMarkers.length > 1 && <ButtonComp nameButton='deletar todos' deleteButton onClickButton={deleteAllFunction}/>}
+        <ButtonComp nameButton='Adicionar Novo' onClickButton={addMarkerFunction}/>
     </div>
   )
 }
